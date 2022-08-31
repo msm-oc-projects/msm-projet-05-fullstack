@@ -5,19 +5,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "topics")
-public class Topic {
+@Table(name = "posts")
+public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "topic_id")
+	@Column(name="post_id")
 	private Long id;
 	
-	@Column(nullable = false)
-	private String name;
+	@ManyToOne
+	@JoinColumn(name = "topic_id")
+	private Topic topic;
+	
+	// TODO : to finish...
 
 	public Long getId() {
 		return id;
@@ -27,12 +32,13 @@ public class Topic {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Topic getTopic() {
+		return topic;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTopic(Topic topic) {
+		this.topic = topic;
 	}
+		
 	
 }

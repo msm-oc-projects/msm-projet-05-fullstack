@@ -8,16 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "topics")
-public class Topic {
+@Table(name = "comments")
+public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "topic_id")
+	@Column(name = "comment_id")
 	private Long id;
 	
-	@Column(nullable = false)
-	private String name;
+	// TODO : to finish...
 
 	public Long getId() {
 		return id;
@@ -25,14 +24,6 @@ public class Topic {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	}	
 	
 }
