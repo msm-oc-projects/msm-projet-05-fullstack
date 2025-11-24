@@ -61,13 +61,16 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",         
+          "options": {
+            "buildTarget": "mdd-client:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "mdd-client:build:production"
+              "buildTarget": "mdd-client:build:production"
             },
             "development": {
-              "browserTarget": "mdd-client:build:development"
+              "buildTarget": "mdd-client:build:production"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mdd-client:build"
+            "buildTarget": "mdd-client:production"          
           }
         },
         "test": {
