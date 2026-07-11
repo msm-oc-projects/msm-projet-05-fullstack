@@ -93,6 +93,18 @@ GET /api/topics
 
 Cet endpoint lit les thèmes créés par Flyway dans PostgreSQL et renvoie une liste JSON triée par nom. Le frontend l’utilise pour afficher la page des thèmes.
 
+Les parcours MVP disponibles sont :
+
+- inscription et connexion par e-mail ou nom d'utilisateur ;
+- consultation et modification du profil ;
+- abonnement depuis les thèmes et désabonnement depuis le profil ;
+- fil limité aux thèmes suivis, trié dans les deux sens ;
+- création et consultation d'un article ;
+- publication de commentaires non récursifs ;
+- déconnexion côté navigateur.
+
+Les routes métier sous `/api/**` exigent un jeton JWT, sauf `/api/auth/register` et `/api/auth/login`. Définissez `JWT_SECRET` dans `.env` avec une valeur Base64 représentant au moins 32 octets. Le jeton est conservé par le frontend pour maintenir la connexion entre les sessions du navigateur.
+
 Exécuter les tests :
 
 ```bash
