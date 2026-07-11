@@ -1,0 +1,23 @@
+<main class="topics-page">
+  <h1>Thèmes</h1>
+
+  @if (loading()) {
+    <p class="status" aria-live="polite">Chargement des thèmes…</p>
+  } @else if (errorMessage()) {
+    <p class="status status--error" role="alert">{{ errorMessage() }}</p>
+  } @else if (topics().length === 0) {
+    <p class="status">Aucun thème n’est disponible pour le moment.</p>
+  } @else {
+    <section class="topic-grid" aria-label="Liste des thèmes">
+      @for (topic of topics(); track topic.id) {
+        <article class="topic-card">
+          <h2>{{ topic.name }}</h2>
+          <p>{{ topic.description }}</p>
+          <button type="button" (click)="subscribe(topic)" [disabled]="topic.subscribed">
+            {{ topic.subscribed ? 'Déjà abonné' : "S'abonner" }}
+          </button>
+        </article>
+      }
+    </section>
+  }
+</main>

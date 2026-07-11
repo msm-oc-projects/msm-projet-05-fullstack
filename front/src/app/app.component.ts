@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class AppComponent {
-  title = 'front';
+  readonly auth = inject(AuthService);
+  readonly menuOpen = signal(false);
+  private readonly router = inject(Router);
+  closeMenu(): void { this.menuOpen.set(false); }
+  logout(): void { this.closeMenu(); this.auth.logout(); this.router.navigate(['/auth']); }
 }

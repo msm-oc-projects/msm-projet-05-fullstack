@@ -1,1 +1,14 @@
+@if (auth.authenticated()) {
+  <header class="navigation">
+    <a routerLink="/articles" class="logo" aria-label="MDD, accueil des articles" (click)="closeMenu()">MDD</a>
+    <button type="button" class="menu-button" aria-label="Ouvrir le menu" [attr.aria-expanded]="menuOpen()"
+      aria-controls="main-navigation" (click)="menuOpen.update(open => !open)">☰</button>
+    <nav id="main-navigation" aria-label="Navigation principale" [class.open]="menuOpen()">
+      <a routerLink="/articles" routerLinkActive="active" (click)="closeMenu()">Articles</a>
+      <a routerLink="/topics" routerLinkActive="active" (click)="closeMenu()">Thèmes</a>
+      <a routerLink="/profile" routerLinkActive="active" (click)="closeMenu()" aria-label="Profil utilisateur">◯</a>
+      <button type="button" class="logout" (click)="logout()">Se déconnecter</button>
+    </nav>
+  </header>
+}
 <router-outlet></router-outlet>

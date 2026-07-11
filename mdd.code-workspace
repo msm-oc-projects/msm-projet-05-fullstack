@@ -1,0 +1,22 @@
+{
+  "folders": [
+    { "name": "MDD", "path": "." },
+    { "name": "Front Angular", "path": "front" },
+    { "name": "Back Spring Boot", "path": "back" }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/target": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "angular.ng-template",
+      "vscjava.vscode-java-pack",
+      "vmware.vscode-spring-boot",
+      "redhat.java"
+    ]
+  }
+}

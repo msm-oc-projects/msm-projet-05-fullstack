@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "front: start",
+      "type": "npm",
+      "script": "start",
+      "path": "front",
+      "isBackground": true,
+      "problemMatcher": "$tsc-watch"
+    },
+    {
+      "label": "front: test",
+      "type": "npm",
+      "script": "test",
+      "path": "front",
+      "problemMatcher": []
+    },
+    {
+      "label": "back: start",
+      "type": "shell",
+      "command": "./mvnw spring-boot:run",
+      "options": { "cwd": "${workspaceFolder}/back" },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "back: test",
+      "type": "shell",
+      "command": "./mvnw test",
+      "options": { "cwd": "${workspaceFolder}/back" },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "database: start",
+      "type": "shell",
+      "command": "docker compose up -d db pgadmin",
+      "problemMatcher": []
+    }
+  ]
+}

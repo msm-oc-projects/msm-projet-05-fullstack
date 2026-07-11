@@ -1,0 +1,8 @@
+:host { display: block; }
+.topics-page { min-height: calc(100vh - 72px); }
+.topic-grid { max-width: 960px; margin: 0 auto; }
+.topic-card { display: flex; min-height: 210px; flex-direction: column; }
+.topic-card h2 { margin-bottom: 12px; font-size: 1.25rem; }
+.topic-card p { flex: 1; margin: 0 0 20px; }
+.topic-card button { align-self: center; min-width: 160px; }
+@media (max-width: 700px) { .topics-page { min-height: calc(100vh - 64px); } }
