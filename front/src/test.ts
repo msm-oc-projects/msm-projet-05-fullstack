@@ -13,3 +13,4 @@ getTestBed().initTestEnvironment(
 
 import './app/app.component.spec';
 import './app/topic/topic.component.spec';
+import './app/topic/topic.service.spec';
