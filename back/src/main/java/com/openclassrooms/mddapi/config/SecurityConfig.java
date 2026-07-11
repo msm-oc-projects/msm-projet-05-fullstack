@@ -22,6 +22,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
+/**
+ * Central security configuration for the MVP API.
+ *
+ * <p>The API is stateless: public authentication routes issue JWTs and every
+ * business route is protected by Spring Security's resource server support.</p>
+ */
 @Configuration
 public class SecurityConfig {
 
@@ -60,6 +66,10 @@ public class SecurityConfig {
         return decoder;
     }
 
+    /**
+     * Decodes the Base64 JWT secret and enforces the minimum key size required
+     * for HS256, so an unsafe local configuration fails at startup.
+     */
     private SecretKey secretKey(String secret) {
         byte[] bytes = Base64.getDecoder().decode(secret);
         if (bytes.length < 32) {
