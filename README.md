@@ -85,6 +85,14 @@ set +a
 
 L’API est disponible sur <http://localhost:9000>.
 
+Premier parcours end-to-end disponible :
+
+```http
+GET /api/topics
+```
+
+Cet endpoint lit les thèmes créés par Flyway dans PostgreSQL et renvoie une liste JSON triée par nom. Le frontend l’utilise pour afficher la page des thèmes.
+
 Exécuter les tests :
 
 ```bash
