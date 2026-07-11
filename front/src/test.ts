@@ -15,3 +15,5 @@ import './app/app.component.spec';
 import './app/topic/topic.component.spec';
 import './app/topic/topic.service.spec';
 import './app/main-features.service.spec';
+import './app/app.module';
+import './app/components.spec';

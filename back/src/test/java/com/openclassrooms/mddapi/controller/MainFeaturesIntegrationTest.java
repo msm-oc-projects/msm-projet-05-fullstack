@@ -16,12 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest(properties = "app.jwt.secret=MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=")
 @AutoConfigureMockMvc
+@Transactional
 class MainFeaturesIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -106,6 +108,9 @@ class MainFeaturesIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
         assertTrue(indexOf(descendingFeed, secondPostId) < indexOf(descendingFeed, postId));
         assertTrue(indexOf(ascendingFeed, postId) < indexOf(ascendingFeed, secondPostId));
+
+        mockMvc.perform(get("/api/articles?sort=invalid").header("Authorization", bearer(token)))
+                .andExpect(status().isBadRequest());
 
         mockMvc.perform(post("/api/articles/{id}/comments", postId)
                         .header("Authorization", bearer(token))
