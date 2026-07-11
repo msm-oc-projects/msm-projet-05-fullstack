@@ -25,12 +25,12 @@ nvm use
 
 ## Installation
 
-Clonez le dépôt et placez-vous sur la branche de développement :
+Clonez le dépôt et placez-vous sur la branche stable :
 
 ```bash
 git clone https://github.com/msm-oc-projects/msm-projet-05-fullstack.git
 cd msm-projet-05-fullstack
-git switch develop
+git switch main
 ```
 
 Créez la configuration locale à partir du modèle, puis remplacez les valeurs d’exemple :
@@ -170,7 +170,7 @@ Le rapport est généré dans `front/coverage/mdd-client/index.html`. Karma bloq
 
 ## Configuration IDE
 
-Ouvrez `mdd-fullstack.code-workspace` avec VS Code. Les réglages et extensions recommandées couvrent Angular, Java/Spring Boot, SQL, Docker et les fichiers d’environnement.
+Ouvrez `mdd.code-workspace` avec VS Code. Les réglages et extensions recommandées couvrent Angular, Java/Spring Boot, SQL, Docker et les fichiers d’environnement.
 
 Ne versionnez jamais `.env`, un mot de passe, un jeton JWT ou une clé privée. Toute nouvelle variable requise doit être documentée avec une valeur factice dans `.env.example`.
 

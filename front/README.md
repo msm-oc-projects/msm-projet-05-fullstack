@@ -1,6 +1,6 @@
 # MddClient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 20.x.x.
+This project uses [Angular CLI](https://github.com/angular/angular-cli) version 22.0.6.
 
 ## Development server
 
@@ -20,8 +20,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+No end-to-end runner is configured in the MVP. Cypress is listed in the technical review as a recommended next iteration for the full browser journey.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help on the Angular CLI use `ng help` or see the [Angular CLI documentation](https://angular.dev/tools/cli).
