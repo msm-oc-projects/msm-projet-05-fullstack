@@ -4,7 +4,7 @@ Date de validation : 11 juillet 2026.
 
 ## Périmètre et environnement
 
-La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants et le build de production. Elle a été exécutée avec Java 21.0.11, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.22.3 et Chrome Headless 150.
+La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants, le build de production et un scénario Cypress versionné. Les tests unitaires et d’intégration ont été exécutés avec Java 21.0.11, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.22.3 et Chrome Headless 150.
 
 ## Résultats automatisés
 
@@ -14,7 +14,7 @@ La campagne couvre l’API, la sécurité JWT, les règles métier principales, 
 | Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 63,23 %, branches 10,81 % |
 | Build frontend | Angular CLI, configuration production | réussi | bundle initial 390,68 kB brut |
 | Audit dépendances de production | `npm audit --omit=dev` | 0 vulnérabilité connue | sans objet |
-| Parcours end-to-end manuel | Navigateur desktop/mobile, API Spring Boot, PostgreSQL | protocole documenté | `docs/E2E_VALIDATION.md` |
+| Parcours end-to-end Cypress | Cypress, navigateur Chrome, API Spring Boot, PostgreSQL | scénario versionné, exécution à rejouer sur poste compatible | `front/cypress/e2e/mdd-mvp.cy.ts` |
 
 La cible de 70 % est satisfaite sur les métriques globales principales, lignes et instructions. Les branches et fonctions sont publiées séparément pour ne pas masquer les zones encore peu exercées. Karma applique automatiquement un seuil global de 70 % sur les lignes et les instructions.
 
@@ -51,11 +51,14 @@ cd front
 npm ci
 npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
 npm run build
+npm run e2e
 npm audit --omit=dev
 ```
 
 Rapports HTML reproductibles : `back/target/site/jacoco/index.html` et `front/coverage/mdd-client/index.html`. Ces artefacts générés ne sont pas versionnés.
 
+Note environnement : le scénario Cypress est prêt et versionné. Sur le poste de travail utilisé pour cette mise à jour, `npx cypress verify` échoue au démarrage du binaire Electron avec `bad option: --no-sandbox/--smoke-test`, ce qui empêche l’exécution locale complète du parcours. L’exécution doit être rejouée sur un environnement compatible Cypress, avec Node 22.22.3, les dépendances système Cypress, PostgreSQL, l’API et le front démarrés.
+
 ## Choix des outils et limites
 
-JUnit est conservé pour l’écosystème Spring. Le socle Angular fourni utilise Jasmine/Karma ; le remplacer par Jest en fin de MVP ajouterait une migration sans gain fonctionnel immédiat. Le parcours complet est décrit dans `docs/E2E_VALIDATION.md` pour la validation navigateur du MVP. Cypress reste recommandé pour une prochaine itération afin d’automatiser ce parcours réel dans la CI. Les priorités suivantes sont d’augmenter la couverture des branches d’erreur, d’isoler PostgreSQL avec Testcontainers et d’ajouter un parcours Cypress inscription → abonnement → publication → commentaire.
+JUnit est conservé pour l’écosystème Spring. Le socle Angular fourni utilise Jasmine/Karma ; le remplacer par Jest en fin de MVP ajouterait une migration sans gain fonctionnel immédiat. Cypress est ajouté pour couvrir le parcours réel inscription → abonnement → publication → commentaire → profil → déconnexion. La prochaine amélioration consiste à brancher ce scénario dans la CI avec démarrage automatisé de PostgreSQL, du back-end et du front-end, afin de figer son exécution dans un environnement maîtrisé.

@@ -4,16 +4,50 @@ Date de validation : 11 juillet 2026.
 
 ## Position retenue pour le MVP
 
-Le repository contient des tests automatises back-end et front-end, ainsi qu'un parcours d'integration qui traverse l'API, la securite et PostgreSQL. Aucun runner Cypress n'est livre dans cette version afin de ne pas ajouter une dependance lourde en fin de MVP sans stabilisation CI.
+Le repository contient maintenant un vrai scenario Cypress, en plus des tests automatises back-end et front-end. Il vise le parcours utilisateur principal dans un navigateur, avec le front Angular, l'API Spring Boot et PostgreSQL demarres.
 
-Pour l'auto-evaluation, la case "tests d'integration et end-to-end" est donc couverte par :
+Pour l'auto-evaluation, la case "tests d'integration et end-to-end" est couverte par :
 
 - tests d'integration automatises Spring Boot + MockMvc + PostgreSQL ;
 - tests front-end Angular TestBed sur services et composants critiques ;
-- protocole manuel navigateur ci-dessous pour le parcours utilisateur complet ;
-- recommandation explicite d'ajout Cypress en prochaine iteration.
+- scenario Cypress `front/cypress/e2e/mdd-mvp.cy.ts` ;
+- protocole manuel navigateur ci-dessous, utile pour rejouer la demonstration et diagnostiquer un echec E2E.
 
-## Parcours manuel de validation navigateur
+## Scenario Cypress automatise
+
+| Etape | Action automatisee | Resultat attendu |
+|---|---|---|
+| 1 | Ouvrir `/auth` | L'ecran d'accueil MDD s'affiche |
+| 2 | Creer un compte unique | L'utilisateur est authentifie et redirige vers le fil |
+| 3 | Ouvrir les themes | Les themes issus de Flyway sont affiches |
+| 4 | S'abonner au premier theme | Le bouton passe a l'etat deja abonne |
+| 5 | Creer un article | L'article est cree avec le theme selectionne |
+| 6 | Ajouter un commentaire | Le commentaire apparait dans le detail |
+| 7 | Modifier le profil | Le message de succes s'affiche |
+| 8 | Se desabonner | La liste d'abonnements devient vide |
+| 9 | Se deconnecter | L'utilisateur revient sur `/auth` |
+
+## Commandes
+
+Prerequis : Node 22.22.3, PostgreSQL, back-end et front-end demarres, et dependances systeme Cypress disponibles.
+
+```bash
+docker compose up -d
+
+cd back
+set -a
+source ../.env
+set +a
+./mvnw spring-boot:run
+
+cd ../front
+npm ci
+npm start
+
+npm run e2e
+```
+
+## Parcours manuel de secours
 
 | Etape | Action | Resultat attendu |
 |---|---|---|
@@ -29,11 +63,8 @@ Pour l'auto-evaluation, la case "tests d'integration et end-to-end" est donc cou
 | 10 | Se desabonner depuis le profil | L'abonnement disparait de la liste |
 | 11 | Se deconnecter | Les routes privees redirigent vers l'authentification |
 
-## Commande recommandee pour l'iteration suivante
+Le scenario Cypress doit ensuite etre branche dans la CI avec demarrage automatise de PostgreSQL, du back-end et du front-end.
 
-```bash
-npm install --save-dev cypress
-npx cypress open
-```
+## Etat d'execution
 
-Le scenario prioritaire a automatiser est : inscription -> abonnement -> publication -> commentaire -> profil -> deconnexion. Cette evolution est deja inscrite dans la revue technique pour transformer le protocole manuel en test navigateur reproductible en CI.
+Le scenario est versionne et pret a etre execute. Sur le poste de travail utilise pour cette mise a jour, `npx cypress verify` echoue au demarrage du binaire Electron avec `bad option: --no-sandbox/--smoke-test`. L'execution complete doit donc etre rejouee sur un environnement compatible Cypress ou dans une CI dediee.
