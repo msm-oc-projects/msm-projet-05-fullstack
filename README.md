@@ -156,10 +156,12 @@ Commandes de validation :
 ```bash
 npm run build
 npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+npm run e2e
 npm audit --omit=dev
 ```
 
 Le rapport est généré dans `front/coverage/mdd-client/index.html`. Karma bloque la validation si la couverture globale descend sous 70 % des instructions ou des lignes.
+Le test Cypress `front/cypress/e2e/mdd-mvp.cy.ts` demande que PostgreSQL, le back-end et le front-end soient démarrés, avec Node 22.22.3 et un environnement système compatible Cypress.
 
 ## Documentation finale
 

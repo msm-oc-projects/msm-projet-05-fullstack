@@ -28,7 +28,7 @@ Le MVP est cohérent, exécutable et présentable : architecture client–serveu
 | Faible | `ITopicService` n’avait qu’une implémentation et n’apportait pas de frontière utile | Corrigé : injection directe du service, abstraction supprimée |
 | Moyenne | Le JWT est stocké dans le stockage local du navigateur | Accepté pour le MVP interne ; migrer vers cookie `HttpOnly`, `Secure`, `SameSite` avant ouverture publique |
 | Moyenne | Pas de pagination du fil ni des commentaires | À ajouter seulement lorsque le volume le justifiera |
-| Moyenne | Pas encore de parcours navigateur Cypress automatisé | Backlog CI ; les composants et le parcours backend/base sont automatisés |
+| Moyenne | Pas encore de parcours navigateur Cypress automatisé | Corrigé : scénario Cypress versionné ; automatisation CI à ajouter |
 | Faible | Plusieurs templates Angular restent inline | Acceptable à cette taille ; extraire HTML/SCSS lorsque les écrans évolueront |
 | Faible | Les captures UI ne doivent pas être confondues avec les tests automatisés | Annexe UI ajoutée avec grille Figma, protocole de capture et formats attendus |
 
@@ -47,6 +47,6 @@ Le MVP est cohérent, exécutable et présentable : architecture client–serveu
 ## Recommandations ordonnées
 
 1. Ajouter en CI le build frontend, les deux campagnes de tests et leurs seuils.
-2. Ajouter Testcontainers puis automatiser avec Cypress le scénario manuel déjà décrit.
+2. Ajouter Testcontainers puis brancher le scénario Cypress dans la CI.
 3. Remplacer le stockage local du JWT par un cookie sécurisé avant ouverture externe.
 4. Ajouter pagination et observabilité uniquement avec des besoins/volumes mesurés.
