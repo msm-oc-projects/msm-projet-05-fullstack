@@ -12,7 +12,7 @@ type AuthView = 'home' | 'login' | 'register';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <main class="auth-page">
-      <div class="auth-logo" aria-label="MDD, Monde de Dév">MDD</div>
+      <img class="auth-logo" src="/assets/logo_p6.png" alt="MDD, Monde de Dév">
       @if (view() === 'home') {
         <h1>Bienvenue sur MDD</h1>
         <p class="auth-intro">Le réseau social des développeurs.</p>

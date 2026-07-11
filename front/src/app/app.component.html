@@ -1,6 +1,8 @@
 @if (auth.authenticated()) {
   <header class="navigation">
-    <a routerLink="/articles" class="logo" aria-label="MDD, accueil des articles" (click)="closeMenu()">MDD</a>
+    <a routerLink="/articles" class="logo" aria-label="MDD, accueil des articles" (click)="closeMenu()">
+      <img src="/assets/logo_p6.png" alt="MDD">
+    </a>
     <button type="button" class="menu-button" aria-label="Ouvrir le menu" [attr.aria-expanded]="menuOpen()"
       aria-controls="main-navigation" (click)="menuOpen.update(open => !open)">☰</button>
     <nav id="main-navigation" aria-label="Navigation principale" [class.open]="menuOpen()">

@@ -31,6 +31,7 @@ Cette annexe sert de preuve pour l'indicateur d'auto-evaluation relatif aux comp
 ## Captures d'ecran versionnees
 
 Deux captures publiques sont versionnees dans `docs/screenshots` afin de prouver le rendu desktop/mobile de l'ecran d'accueil et d'authentification.
+Elles reprennent l'asset officiel `front/src/assets/logo_p6.png`, egalement utilise par le code source de l'ecran d'authentification.
 
 | Capture | Format conseille | Commentaire |
 |---|---|---|
