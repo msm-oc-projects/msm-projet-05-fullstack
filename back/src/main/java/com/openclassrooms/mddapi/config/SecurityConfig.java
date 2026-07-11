@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
@@ -33,6 +34,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
                         .anyRequest().authenticated())
+                .headers(headers -> headers
+                        .contentSecurityPolicy(csp -> csp.policyDirectives(
+                                "default-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")))
                 .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> {}))
                 .build();
     }
@@ -49,9 +53,11 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder(@Value("${app.jwt.secret}") String secret) {
-        return NimbusJwtDecoder.withSecretKey(secretKey(secret))
+        var decoder = NimbusJwtDecoder.withSecretKey(secretKey(secret))
                 .macAlgorithm(MacAlgorithm.HS256)
                 .build();
+        decoder.setJwtValidator(JwtValidators.createDefaultWithIssuer("mdd-api"));
+        return decoder;
     }
 
     private SecretKey secretKey(String secret) {

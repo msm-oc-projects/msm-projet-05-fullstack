@@ -51,6 +51,17 @@ class MainFeaturesIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
         String token = objectMapper.readTree(authJson).get("token").asText();
 
+        mockMvc.perform(get("/api/topics").header("Authorization", "Bearer invalid-token"))
+                .andExpect(status().isUnauthorized());
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"identifier\":\"%s\",\"password\":\"Valid1!password\"}".formatted(username)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.token").isNotEmpty());
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"identifier\":\"%s\",\"password\":\"Valid1!password\"}".formatted(email)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.token").isNotEmpty());
+
         String topicsJson = mockMvc.perform(get("/api/topics").header("Authorization", bearer(token)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].subscribed").value(false))
