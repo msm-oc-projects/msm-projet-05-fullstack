@@ -109,7 +109,7 @@ L’interface reprend les principes des maquettes MDD : violet principal, cartes
 
 La sécurité vérifie la signature, l’expiration et l’émetteur des JWT. CORS est limité à l’origine configurée, les en-têtes HTTP de Spring Security sont activés et le frontend supprime la session locale puis redirige vers la connexion après une réponse `401`.
 
-Exécuter les tests :
+Exécuter les tests et produire la couverture JaCoCo :
 
 ```bash
 set -a
@@ -117,6 +117,28 @@ source ../.env
 set +a
 ./mvnw test
 ```
+
+Le rapport est généré dans `back/target/site/jacoco/index.html`.
+
+## Contrat de l’API
+
+Sauf mention « public », les routes exigent l’en-tête `Authorization: Bearer <token>`.
+
+| Méthode | Route | Accès | Corps / paramètres | Succès |
+|---|---|---|---|---|
+| `POST` | `/api/auth/register` | Public | `email`, `username`, `password` | `201` + JWT |
+| `POST` | `/api/auth/login` | Public | `identifier` (e-mail ou pseudo), `password` | `200` + JWT |
+| `GET` | `/api/me` | JWT | Aucun | `200` + profil |
+| `PUT` | `/api/me` | JWT | `email`, `username`, `password` optionnel | `200` + profil |
+| `GET` | `/api/topics` | JWT | Aucun | `200` + thèmes et état d’abonnement |
+| `POST` | `/api/topics/{id}/subscription` | JWT | Identifiant du thème dans l’URL | `204` |
+| `DELETE` | `/api/topics/{id}/subscription` | JWT | Identifiant du thème dans l’URL | `204` |
+| `GET` | `/api/articles` | JWT | `sort=asc` ou `sort=desc` | `200` + fil personnalisé |
+| `POST` | `/api/articles` | JWT | `topicId`, `title`, `content` | `201` + article |
+| `GET` | `/api/articles/{id}` | JWT | Identifiant de l’article dans l’URL | `200` + article et commentaires |
+| `POST` | `/api/articles/{id}/comments` | JWT | `content` | `201` + commentaire |
+
+Erreurs communes : `400` données invalides, `401` authentification absente ou expirée, `404` ressource inconnue, `409` e-mail ou pseudo déjà utilisé. Le serveur renvoie un objet JSON contenant notamment `status` et `message`.
 
 ## Frontend
 
@@ -133,9 +155,18 @@ Commandes de validation :
 
 ```bash
 npm run build
-npm test -- --watch=false --browsers=ChromeHeadless
+npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
 npm audit --omit=dev
 ```
+
+Le rapport est généré dans `front/coverage/mdd-client/index.html`. Karma bloque la validation si la couverture globale descend sous 70 % des instructions ou des lignes.
+
+## Documentation finale
+
+- [Rapport de tests](docs/TEST_REPORT.md)
+- [Rapport de revue technique](docs/TECHNICAL_REVIEW.md)
+- [FAQ utilisateur](docs/FAQ.md)
+- [Historique des versions](CHANGELOG.md)
 
 ## Configuration IDE
 
