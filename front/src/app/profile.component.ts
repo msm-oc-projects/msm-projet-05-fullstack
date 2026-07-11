@@ -7,7 +7,7 @@ import { TopicService } from './topic/topic.service';
 @Component({ selector: 'app-profile', standalone: false, changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<main><h1>Profil utilisateur</h1><form [formGroup]="form" (ngSubmit)="save()">
     <label>Nom d'utilisateur <input formControlName="username"></label><label>E-mail <input type="email" formControlName="email"></label>
-    <label>Nouveau mot de passe <input type="password" formControlName="password"></label><button type="submit">Sauvegarder</button></form>
+    <label>Nouveau mot de passe <input type="password" formControlName="password"></label><button type="submit" [disabled]="form.invalid">Sauvegarder</button></form>
     @if (message()) { <p aria-live="polite">{{ message() }}</p> } @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
     <h2>Abonnements</h2><section class="grid">@for (topic of profile()?.subscriptions ?? []; track topic.id) {
       <article class="card"><h3>{{ topic.name }}</h3><p>{{ topic.description }}</p><button (click)="unsubscribe(topic.id)">Se désabonner</button></article>

@@ -14,15 +14,15 @@ import org.springframework.security.core.Authentication;
 
 import com.openclassrooms.mddapi.config.CurrentUser;
 import com.openclassrooms.mddapi.dto.TopicResponse;
-import com.openclassrooms.mddapi.service.ITopicService;
+import com.openclassrooms.mddapi.service.TopicService;
 
 @RestController
 @RequestMapping("/api/topics")
 public class TopicController {
 	
-	private final ITopicService topicService;
+	private final TopicService topicService;
 	
-	public TopicController(ITopicService topicService) {
+	public TopicController(TopicService topicService) {
 		this.topicService = topicService;		
 	}
 

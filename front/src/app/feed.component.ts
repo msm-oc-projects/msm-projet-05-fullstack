@@ -30,6 +30,7 @@ export class FeedComponent implements OnInit {
   open(id: number): void { this.router.navigate(['/articles', id]); }
   private load(): void {
     this.loading.set(true);
+    this.error.set('');
     this.service.feed(this.sort()).subscribe({
       next: articles => { this.articles.set(articles); this.loading.set(false); },
       error: event => { this.error.set(event.error?.message ?? 'Impossible de charger le fil.'); this.loading.set(false); }

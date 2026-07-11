@@ -41,6 +41,9 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostSummary> feed(Long userId, String direction) {
+        if (!"asc".equalsIgnoreCase(direction) && !"desc".equalsIgnoreCase(direction)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tri invalide");
+        }
         var topicIds = subscriptionRepository.findByUserIdOrderByTopicNameAsc(userId).stream()
                 .map(subscription -> subscription.getTopic().getId())
                 .toList();

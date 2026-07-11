@@ -15,7 +15,7 @@ import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.SubscriptionId;
 
 @Service
-public class TopicService implements ITopicService {
+public class TopicService {
 
 	private final TopicRepository topicRepository;
 	private final SubscriptionRepository subscriptionRepository;
@@ -28,7 +28,6 @@ public class TopicService implements ITopicService {
 		this.userRepository = userRepository;
 	}
 
-	@Override
 	@Transactional(readOnly = true)
 	public List<TopicResponse> getTopics(Long userId) {
 		var subscribedIds = subscriptionRepository.findByUserIdOrderByTopicNameAsc(userId).stream()
@@ -39,7 +38,6 @@ public class TopicService implements ITopicService {
 				.toList();
 	}
 
-	@Override
 	@Transactional
 	public void subscribe(Long userId, Long topicId) {
 		if (subscriptionRepository.existsByUserIdAndTopicId(userId, topicId)) {
@@ -56,7 +54,6 @@ public class TopicService implements ITopicService {
 		subscriptionRepository.save(subscription);
 	}
 
-	@Override
 	@Transactional
 	public void unsubscribe(Long userId, Long topicId) {
 		subscriptionRepository.deleteById(new SubscriptionId(userId, topicId));

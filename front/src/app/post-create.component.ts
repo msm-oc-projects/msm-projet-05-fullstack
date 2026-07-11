@@ -20,7 +20,10 @@ export class PostCreateComponent implements OnInit {
   private readonly articles = inject(ArticleService); private readonly router = inject(Router);
   readonly topics = signal<Topic[]>([]); readonly error = signal('');
   readonly form = this.fb.group({ topicId: ['', Validators.required], title: ['', Validators.required], content: ['', Validators.required] });
-  ngOnInit(): void { this.topicsService.getTopics().subscribe(topics => this.topics.set(topics)); }
+  ngOnInit(): void { this.topicsService.getTopics().subscribe({
+    next: topics => this.topics.set(topics),
+    error: event => this.error.set(event.error?.message ?? 'Impossible de charger les thèmes.')
+  }); }
   submit(): void { const value = this.form.getRawValue(); this.articles.create(Number(value.topicId), value.title!, value.content!).subscribe({
     next: article => this.router.navigate(['/articles', article.id]),
     error: event => this.error.set(event.error?.message ?? "Impossible de créer l'article.") }); }
