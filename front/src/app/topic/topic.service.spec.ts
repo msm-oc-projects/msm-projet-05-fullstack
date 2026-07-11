@@ -25,7 +25,7 @@ describe('TopicService', () => {
   afterEach(() => httpTesting.verify());
 
   it('should request topics from the backend API', () => {
-    const response = [{ id: 1, name: 'Angular', description: 'Framework frontend.' }];
+    const response = [{ id: 1, name: 'Angular', description: 'Framework frontend.', subscribed: false }];
 
     service.getTopics().subscribe(topics => expect(topics).toEqual(response));
 

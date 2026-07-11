@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -9,6 +11,10 @@ describe('AppComponent', () => {
         AppComponent
       ],
       schemas: [NO_ERRORS_SCHEMA]
+      ,providers: [
+        { provide: AuthService, useValue: { authenticated: () => false, logout: () => undefined } },
+        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } }
+      ]
     }).compileComponents();
   });
 

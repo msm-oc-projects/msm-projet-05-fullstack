@@ -9,7 +9,7 @@ describe('TopicComponent', () => {
   let topicService: jasmine.SpyObj<TopicService>;
 
   beforeEach(async () => {
-    topicService = jasmine.createSpyObj<TopicService>('TopicService', ['getTopics']);
+    topicService = jasmine.createSpyObj<TopicService>('TopicService', ['getTopics', 'subscribe']);
 
     await TestBed.configureTestingModule({
       declarations: [TopicComponent],
@@ -19,8 +19,8 @@ describe('TopicComponent', () => {
 
   it('should display topics returned by the API', () => {
     topicService.getTopics.and.returnValue(of([
-      { id: 1, name: 'Angular', description: 'Framework frontend.' },
-      { id: 2, name: 'Java', description: 'Langage et écosystème.' }
+      { id: 1, name: 'Angular', description: 'Framework frontend.', subscribed: false },
+      { id: 2, name: 'Java', description: 'Langage et écosystème.', subscribed: true }
     ]));
 
     fixture = TestBed.createComponent(TopicComponent);

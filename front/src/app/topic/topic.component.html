@@ -16,6 +16,9 @@
         <article class="topic-card">
           <h2>{{ topic.name }}</h2>
           <p>{{ topic.description }}</p>
+          <button type="button" (click)="subscribe(topic)" [disabled]="topic.subscribed">
+            {{ topic.subscribed ? 'Déjà abonné' : "S'abonner" }}
+          </button>
         </article>
       }
     </section>

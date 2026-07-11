@@ -1,0 +1,5 @@
+.navigation { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 1px solid #ddd; }
+.logo { padding: 10px 18px; border-radius: 8px; background: #6c5ccf; color: white; font-weight: 700; text-decoration: none; }
+nav { display: flex; align-items: center; gap: 24px; } nav a { color: #222; text-decoration: none; } nav a.active { color: #6c5ccf; }
+.logout { border: 0; background: transparent; color: #a40f0f; }
+@media (max-width: 700px) { .navigation { align-items: flex-start; padding: 12px 16px; } nav { flex-wrap: wrap; justify-content: flex-end; gap: 12px; } }

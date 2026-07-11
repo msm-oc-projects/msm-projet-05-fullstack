@@ -33,4 +33,11 @@ export class TopicComponent implements OnInit {
                 }
             });
     }
+
+    subscribe(topic: Topic): void {
+        this.topicService.subscribe(topic.id).subscribe({
+            next: () => this.topics.update(topics => topics.map(item => item.id === topic.id ? { ...item, subscribed: true } : item)),
+            error: event => this.errorMessage.set(event.error?.message ?? "L'abonnement a échoué.")
+        });
+    }
 }

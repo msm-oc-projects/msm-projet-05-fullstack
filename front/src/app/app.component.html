@@ -1,1 +1,8 @@
-<app-topic></app-topic>
+@if (auth.authenticated()) {
+  <header class="navigation"><a routerLink="/articles" class="logo">MDD</a>
+    <nav aria-label="Navigation principale"><a routerLink="/articles" routerLinkActive="active">Articles</a>
+      <a routerLink="/topics" routerLinkActive="active">Thèmes</a><a routerLink="/profile" routerLinkActive="active">Profil</a>
+      <button type="button" class="logout" (click)="logout()">Se déconnecter</button></nav>
+  </header>
+}
+<router-outlet></router-outlet>
