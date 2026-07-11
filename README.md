@@ -105,6 +105,10 @@ Les parcours MVP disponibles sont :
 
 Les routes métier sous `/api/**` exigent un jeton JWT, sauf `/api/auth/register` et `/api/auth/login`. Définissez `JWT_SECRET` dans `.env` avec une valeur Base64 représentant au moins 32 octets. Le jeton est conservé par le frontend pour maintenir la connexion entre les sessions du navigateur.
 
+L’interface reprend les principes des maquettes MDD : violet principal, cartes gris clair, formulaires centrés, grille deux colonnes sur desktop et une colonne sur mobile. La navigation devient un menu accessible sous 700 px. Les contrôles disposent d’un focus visible, de libellés associés et d’attributs ARIA lorsque leur fonction n’est pas exprimée par du texte.
+
+La sécurité vérifie la signature, l’expiration et l’émetteur des JWT. CORS est limité à l’origine configurée, les en-têtes HTTP de Spring Security sont activés et le frontend supprime la session locale puis redirige vers la connexion après une réponse `401`.
+
 Exécuter les tests :
 
 ```bash
