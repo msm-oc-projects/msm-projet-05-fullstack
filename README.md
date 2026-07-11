@@ -165,6 +165,9 @@ Le rapport est généré dans `front/coverage/mdd-client/index.html`. Karma bloq
 
 - [Rapport de tests](docs/TEST_REPORT.md)
 - [Rapport de revue technique](docs/TECHNICAL_REVIEW.md)
+- [Revue UI et conformité aux maquettes](docs/UI_REVIEW.md)
+- [Validation end-to-end](docs/E2E_VALIDATION.md)
+- [Qualité, performance et conformité](docs/QUALITY_PERFORMANCE_COMPLIANCE.md)
 - [FAQ utilisateur](docs/FAQ.md)
 - [Historique des versions](CHANGELOG.md)
 

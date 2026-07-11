@@ -14,6 +14,7 @@ La campagne couvre l’API, la sécurité JWT, les règles métier principales, 
 | Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 63,23 %, branches 10,81 % |
 | Build frontend | Angular CLI, configuration production | réussi | bundle initial 390,68 kB brut |
 | Audit dépendances de production | `npm audit --omit=dev` | 0 vulnérabilité connue | sans objet |
+| Parcours end-to-end manuel | Navigateur desktop/mobile, API Spring Boot, PostgreSQL | protocole documenté | `docs/E2E_VALIDATION.md` |
 
 La cible de 70 % est satisfaite sur les métriques globales principales, lignes et instructions. Les branches et fonctions sont publiées séparément pour ne pas masquer les zones encore peu exercées. Karma applique automatiquement un seuil global de 70 % sur les lignes et les instructions.
 
@@ -57,4 +58,4 @@ Rapports HTML reproductibles : `back/target/site/jacoco/index.html` et `front/co
 
 ## Choix des outils et limites
 
-JUnit est conservé pour l’écosystème Spring. Le socle Angular fourni utilise Jasmine/Karma ; le remplacer par Jest en fin de MVP ajouterait une migration sans gain fonctionnel immédiat. Cypress reste recommandé pour une prochaine itération afin d’automatiser les parcours réels dans un navigateur. Les priorités suivantes sont d’augmenter la couverture des branches d’erreur, d’isoler PostgreSQL avec Testcontainers et d’ajouter un parcours Cypress inscription → abonnement → publication → commentaire dans la CI.
+JUnit est conservé pour l’écosystème Spring. Le socle Angular fourni utilise Jasmine/Karma ; le remplacer par Jest en fin de MVP ajouterait une migration sans gain fonctionnel immédiat. Le parcours complet est décrit dans `docs/E2E_VALIDATION.md` pour la validation navigateur du MVP. Cypress reste recommandé pour une prochaine itération afin d’automatiser ce parcours réel dans la CI. Les priorités suivantes sont d’augmenter la couverture des branches d’erreur, d’isoler PostgreSQL avec Testcontainers et d’ajouter un parcours Cypress inscription → abonnement → publication → commentaire.

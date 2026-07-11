@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Converts validation, business and unexpected exceptions into a consistent
+ * JSON error contract without exposing stack traces to the frontend.
+ */
 @RestControllerAdvice
 public class ApiExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiExceptionHandler.class);

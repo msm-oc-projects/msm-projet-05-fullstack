@@ -2,6 +2,9 @@ package com.openclassrooms.mddapi.config;
 
 import org.springframework.security.core.Authentication;
 
+/**
+ * Extracts the authenticated MDD user id from Spring Security's JWT authentication.
+ */
 public final class CurrentUser {
     private CurrentUser() {
     }

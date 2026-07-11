@@ -30,6 +30,7 @@ Le MVP est cohérent, exécutable et présentable : architecture client–serveu
 | Moyenne | Pas de pagination du fil ni des commentaires | À ajouter seulement lorsque le volume le justifiera |
 | Moyenne | Pas encore de parcours navigateur Cypress automatisé | Backlog CI ; les composants et le parcours backend/base sont automatisés |
 | Faible | Plusieurs templates Angular restent inline | Acceptable à cette taille ; extraire HTML/SCSS lorsque les écrans évolueront |
+| Faible | Les captures UI ne doivent pas être confondues avec les tests automatisés | Annexe UI ajoutée avec grille Figma, protocole de capture et formats attendus |
 
 ## Revue par domaine
 
@@ -39,11 +40,13 @@ Le MVP est cohérent, exécutable et présentable : architecture client–serveu
 
 **Maintenabilité.** Les DTO empêchent d’exposer les entités JPA. Les services contiennent la logique et les contrôleurs restent fins. Les prochains gains seraient l’extraction des templates, une pagination standard et des tests unitaires ciblés sur chaque branche d’erreur.
 
-**Performance.** Le MVP ne nécessite ni cache ni architecture évènementielle. Les tris sont effectués en base. Pour monter en charge : index guidés par mesures, pagination, analyse des requêtes et métriques avant toute optimisation.
+**Performance.** Le MVP ne nécessite ni cache ni architecture évènementielle. Les tris sont effectués en base et le build Angular de production est validé. Pour monter en charge : index guidés par mesures, pagination, analyse des requêtes et métriques avant toute optimisation. Les preuves et limites sont détaillées dans `docs/QUALITY_PERFORMANCE_COMPLIANCE.md`.
+
+**Conformité.** Le MVP interne externalise les secrets, hache les mots de passe et évite de renvoyer des erreurs techniques à l'utilisateur. Les mentions légales, la politique de confidentialité et la suppression de compte sont identifiées comme livrables à ajouter avant ouverture publique.
 
 ## Recommandations ordonnées
 
 1. Ajouter en CI le build frontend, les deux campagnes de tests et leurs seuils.
-2. Ajouter Testcontainers puis un scénario Cypress métier complet.
+2. Ajouter Testcontainers puis automatiser avec Cypress le scénario manuel déjà décrit.
 3. Remplacer le stockage local du JWT par un cookie sécurisé avant ouverture externe.
 4. Ajouter pagination et observabilité uniquement avec des besoins/volumes mesurés.

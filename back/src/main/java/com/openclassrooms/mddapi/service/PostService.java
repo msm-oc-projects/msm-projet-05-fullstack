@@ -21,6 +21,10 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+/**
+ * Handles the article feed, article publication and comments while keeping
+ * authorization-sensitive data access on the server side.
+ */
 @Service
 public class PostService {
     private final PostRepository postRepository;
