@@ -33,17 +33,26 @@ cd msm-projet-05-fullstack
 git switch main
 ```
 
-Créez la configuration locale à partir du modèle, puis remplacez les valeurs d’exemple :
+Créez la configuration locale à partir du modèle, puis remplacez les valeurs d’exemple.
+
+Sous Linux ou macOS avec Bash :
 
 ```bash
 cp .env.example .env
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+Copy-Item .env.example .env
 ```
 
 Le fichier `.env` contient les secrets locaux et n’est pas versionné.
 
 ## Base de données et pgAdmin
 
-Démarrez PostgreSQL et pgAdmin :
+Démarrez PostgreSQL et pgAdmin depuis la racine du projet. Cette commande est
+identique sous Linux, macOS et Windows PowerShell :
 
 ```bash
 docker compose up -d
@@ -74,13 +83,25 @@ docker compose down --volumes
 
 ## Backend
 
-Depuis le dossier `back` :
+Depuis la racine du projet, sous Linux ou macOS avec Bash :
 
 ```bash
+cd back
 set -a
 source ../.env
 set +a
 ./mvnw spring-boot:run
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+cd back
+Get-Content ..\.env | Where-Object { $_ -match '^[^#][^=]*=' } | ForEach-Object {
+  $name, $value = $_ -split '=', 2
+  Set-Item -Path "Env:$($name.Trim())" -Value $value.Trim()
+}
+.\mvnw.cmd spring-boot:run
 ```
 
 L’API est disponible sur <http://localhost:9000>.
@@ -142,9 +163,11 @@ Erreurs communes : `400` données invalides, `401` authentification absente ou e
 
 ## Frontend
 
-Depuis le dossier `front` :
+Dans un autre terminal ouvert à la racine du projet, sous Linux, macOS ou
+Windows PowerShell :
 
-```bash
+```console
+cd front
 npm ci
 npm start
 ```
