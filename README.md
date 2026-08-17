@@ -16,20 +16,37 @@ MDD est le MVP d’un réseau social destiné aux développeurs. Il permet de co
 - Docker avec le plugin Compose
 - Node.js 22.22.3 et npm 10 ou supérieur
 
-Le fichier `.nvmrc` permet de sélectionner la version Node attendue avec NVM :
+Sous Linux ou macOS, le fichier `.nvmrc` permet de sélectionner la version
+Node attendue avec NVM :
 
 ```bash
 nvm install
 nvm use
 ```
 
+Sous Windows avec PowerShell et nvm-windows :
+
+```powershell
+nvm install 22.22.3
+nvm use 22.22.3
+```
+
 ## Installation
 
-Clonez le dépôt et placez-vous sur la branche stable :
+Sous Linux ou macOS avec Bash, clonez le dépôt et placez-vous sur la branche
+stable :
 
 ```bash
 git clone https://github.com/msm-oc-projects/msm-projet-05-fullstack.git
 cd msm-projet-05-fullstack
+git switch main
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+git clone https://github.com/msm-oc-projects/msm-projet-05-fullstack.git
+Set-Location msm-projet-05-fullstack
 git switch main
 ```
 
@@ -51,10 +68,18 @@ Le fichier `.env` contient les secrets locaux et n’est pas versionné.
 
 ## Base de données et pgAdmin
 
-Démarrez PostgreSQL et pgAdmin depuis la racine du projet. Cette commande est
-identique sous Linux, macOS et Windows PowerShell :
+Démarrez PostgreSQL et pgAdmin depuis la racine du projet.
+
+Sous Linux ou macOS avec Bash :
 
 ```bash
+docker compose up -d
+docker compose ps
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
 docker compose up -d
 docker compose ps
 ```
@@ -69,15 +94,29 @@ Flyway applique automatiquement les migrations au démarrage du backend :
 - `V1__create_mdd_schema.sql` crée le schéma relationnel ;
 - `V2__seed_topics.sql` ajoute les sujets de démonstration.
 
-Pour arrêter les services sans supprimer les données :
+Pour arrêter les services sans supprimer les données, sous Linux ou macOS avec
+Bash :
 
 ```bash
 docker compose down
 ```
 
-Pour réinitialiser entièrement les volumes locaux :
+Sous Windows avec PowerShell :
+
+```powershell
+docker compose down
+```
+
+Pour réinitialiser entièrement les volumes locaux, sous Linux ou macOS avec
+Bash :
 
 ```bash
+docker compose down --volumes
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
 docker compose down --volumes
 ```
 
@@ -130,13 +169,26 @@ L’interface reprend les principes des maquettes MDD : violet principal, cartes
 
 La sécurité vérifie la signature, l’expiration et l’émetteur des JWT. CORS est limité à l’origine configurée, les en-têtes HTTP de Spring Security sont activés et le frontend supprime la session locale puis redirige vers la connexion après une réponse `401`.
 
-Exécuter les tests et produire la couverture JaCoCo :
+Pour exécuter les tests et produire la couverture JaCoCo dans un nouveau
+terminal, sous Linux ou macOS avec Bash :
 
 ```bash
+cd back
 set -a
 source ../.env
 set +a
 ./mvnw test
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+Set-Location back
+Get-Content ..\.env | Where-Object { $_ -match '^[^#][^=]*=' } | ForEach-Object {
+  $name, $value = $_ -split '=', 2
+  Set-Item -Path "Env:$($name.Trim())" -Value $value.Trim()
+}
+.\mvnw.cmd test
 ```
 
 Le rapport est généré dans `back/target/site/jacoco/index.html`.
@@ -163,20 +215,40 @@ Erreurs communes : `400` données invalides, `401` authentification absente ou e
 
 ## Frontend
 
-Dans un autre terminal ouvert à la racine du projet, sous Linux, macOS ou
-Windows PowerShell :
+Dans un autre terminal ouvert à la racine du projet, sous Linux ou macOS avec
+Bash :
 
-```console
+```bash
 cd front
+npm ci
+npm start
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+Set-Location front
 npm ci
 npm start
 ```
 
 L’application est disponible sur <http://localhost:4200>.
 
-Commandes de validation :
+Dans un nouveau terminal ouvert à la racine du projet, exécutez les tests,
+produisez la couverture et validez le frontend sous Linux ou macOS avec Bash :
 
 ```bash
+cd front
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
+npm run e2e
+npm audit --omit=dev
+```
+
+Sous Windows avec PowerShell :
+
+```powershell
+Set-Location front
 npm run build
 npm test -- --watch=false --browsers=ChromeHeadless --code-coverage
 npm run e2e
