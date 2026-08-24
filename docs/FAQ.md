@@ -30,6 +30,10 @@ Depuis le fil, choisissez « Créer un article », sélectionnez un thème et re
 **Pourquoi le bouton de publication reste-t-il indisponible ?**  
 Un thème, un titre et un contenu sont obligatoires. Les champs vides ou composés uniquement d’espaces sont refusés.
 
+**Pourquoi ne puis-je pas ouvrir un article avec son lien ?**
+
+Un article est accessible uniquement si vous êtes abonné à son thème. Abonnez-vous depuis la page « Thèmes », puis revenez au fil d’actualité.
+
 **Puis-je répondre à un commentaire ?**  
 Non. Le MVP prévoit uniquement des commentaires simples, non imbriqués.
 

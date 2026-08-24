@@ -1,17 +1,17 @@
 # Rapport de tests — MDD
 
-Date de validation : 11 juillet 2026.
+Date de validation : 24 août 2026.
 
 ## Périmètre et environnement
 
-La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants, le build de production et un scénario Cypress versionné. Les tests unitaires et d’intégration ont été exécutés avec Java 21.0.11, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.22.3 et Chrome Headless 150.
+La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants, le build de production et un scénario Cypress validé. Les tests unitaires et d’intégration ont été exécutés avec Java 21.0.12, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.23.0 et Chrome Headless 151.
 
 ## Résultats automatisés
 
 | Niveau | Outils | Résultat | Couverture |
 |---|---|---:|---:|
 | Backend unitaire/intégration | JUnit 5, Spring Boot Test, MockMvc, Spring Security Test, PostgreSQL, JaCoCo 0.8.13 | 3/3 tests réussis | lignes 86,12 %, instructions 84,03 %, branches 45,24 % |
-| Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 63,23 %, branches 10,81 % |
+| Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 62,68 %, branches 10,81 % |
 | Build frontend | Angular CLI, configuration production | réussi | bundle initial 390,68 kB brut |
 | Audit dépendances de production | `npm audit --omit=dev` | 0 vulnérabilité connue | sans objet |
 | Parcours end-to-end Cypress | Cypress, navigateur Chrome, API Spring Boot, PostgreSQL | scénario validé | `front/cypress/e2e/mdd-mvp.cy.ts` |

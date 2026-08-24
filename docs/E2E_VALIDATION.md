@@ -1,6 +1,6 @@
 # Validation end-to-end — MDD
 
-Date de validation : 11 juillet 2026.
+Date de validation : 24 août 2026.
 
 ## Position retenue pour le MVP
 

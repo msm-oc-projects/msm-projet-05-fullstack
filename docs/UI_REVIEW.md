@@ -1,6 +1,6 @@
 # Revue UI et conformité aux maquettes — MDD
 
-Date de revue : 11 juillet 2026.
+Date de revue : 24 août 2026.
 
 ## Objectif
 

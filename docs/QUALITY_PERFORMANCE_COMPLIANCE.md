@@ -1,6 +1,6 @@
 # Qualite, performance et conformite — MDD
 
-Date de revue : 11 juillet 2026.
+Date de revue : 24 août 2026.
 
 ## Outils de qualite et d'analyse
 

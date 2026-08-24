@@ -208,10 +208,10 @@ Sauf mention « public », les routes exigent l’en-tête `Authorization: Beare
 | `DELETE` | `/api/topics/{id}/subscription` | JWT | Identifiant du thème dans l’URL | `204` |
 | `GET` | `/api/articles` | JWT | `sort=asc` ou `sort=desc` | `200` + fil personnalisé |
 | `POST` | `/api/articles` | JWT | `topicId`, `title`, `content` | `201` + article |
-| `GET` | `/api/articles/{id}` | JWT | Identifiant de l’article dans l’URL | `200` + article et commentaires |
-| `POST` | `/api/articles/{id}/comments` | JWT | `content` | `201` + commentaire |
+| `GET` | `/api/articles/{id}` | JWT + abonnement au thème | Identifiant de l’article dans l’URL | `200` + article et commentaires |
+| `POST` | `/api/articles/{id}/comments` | JWT + abonnement au thème | `content` | `201` + commentaire |
 
-Erreurs communes : `400` données invalides, `401` authentification absente ou expirée, `404` ressource inconnue, `409` e-mail ou pseudo déjà utilisé. Le serveur renvoie un objet JSON contenant notamment `status` et `message`.
+Erreurs communes : `400` données invalides, `401` authentification absente ou expirée, `403` article hors des thèmes suivis, `404` ressource inconnue, `409` e-mail ou pseudo déjà utilisé. Le serveur renvoie un objet JSON contenant notamment `status` et `message`.
 
 ## Frontend
 
