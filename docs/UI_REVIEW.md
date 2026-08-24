@@ -30,13 +30,17 @@ Cette annexe sert de preuve pour l'indicateur d'auto-evaluation relatif aux comp
 
 ## Captures d'ecran versionnees
 
-Deux captures publiques sont versionnees dans `docs/screenshots` afin de prouver le rendu desktop/mobile de l'ecran d'accueil et d'authentification.
+Six captures publiques sont versionnees dans `docs/screenshots` afin de prouver les parcours principaux en desktop et mobile.
 Elles reprennent l'asset officiel `front/src/assets/logo_p6.png`, egalement utilise par le code source de l'ecran d'authentification.
 
 | Capture | Format conseille | Commentaire |
 |---|---|---|
 | `docs/screenshots/auth-desktop.png` | 1440 x 900 | Accueil MDD desktop |
 | `docs/screenshots/auth-mobile.png` | 390 x 844 | Accueil MDD mobile |
+| `docs/screenshots/feed-desktop.png` | 1280 x 720 | Fil d'actualite desktop |
+| `docs/screenshots/topics-mobile.png` | 390 x 1249 | Themes et etat d'abonnement mobile |
+| `docs/screenshots/article-detail-desktop.png` | 1280 x 725 | Detail d'article et commentaire desktop |
+| `docs/screenshots/profile-mobile.png` | 390 x 795 | Profil et abonnements mobile |
 
 ## Validation des ecrans connectes
 

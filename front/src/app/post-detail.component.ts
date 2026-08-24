@@ -16,7 +16,7 @@ import { ArticleDetail, ArticleService } from './article.service';
         <div class="comment-list">@for (comment of item.comments; track comment.id) {
           <article class="comment-row"><p class="comment-author">{{ comment.author }}</p><div class="comment-bubble"><p>{{ comment.content }}</p></div></article>
         } @empty { <p class="empty-state">Aucun commentaire.</p> }</div>
-        <form class="comment-form" (ngSubmit)="submit()"><label class="sr-only" for="comment-content">Ajouter un commentaire</label>
+        <form class="comment-form" (submit)="$event.preventDefault(); submit()"><label class="sr-only" for="comment-content">Ajouter un commentaire</label>
           <textarea id="comment-content" [formControl]="content" rows="4" placeholder="Écrivez ici votre commentaire"></textarea>
           <button type="submit" class="primary-action" [disabled]="content.invalid">Envoyer</button></form>
       </section>
