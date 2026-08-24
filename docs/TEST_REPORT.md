@@ -10,7 +10,7 @@ La campagne couvre l’API, la sécurité JWT, les règles métier principales, 
 
 | Niveau | Outils | Résultat | Couverture |
 |---|---|---:|---:|
-| Backend unitaire/intégration | JUnit 5, Spring Boot Test, MockMvc, Spring Security Test, PostgreSQL, JaCoCo 0.8.13 | 3/3 tests réussis | lignes 86,12 %, instructions 83,75 %, branches 42,50 % |
+| Backend unitaire/intégration | JUnit 5, Spring Boot Test, MockMvc, Spring Security Test, PostgreSQL, JaCoCo 0.8.13 | 3/3 tests réussis | lignes 86,12 %, instructions 84,03 %, branches 45,24 % |
 | Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 63,23 %, branches 10,81 % |
 | Build frontend | Angular CLI, configuration production | réussi | bundle initial 390,68 kB brut |
 | Audit dépendances de production | `npm audit --omit=dev` | 0 vulnérabilité connue | sans objet |
@@ -21,7 +21,7 @@ La cible de 70 % est satisfaite sur les métriques globales principales, lignes 
 ## Scénarios couverts
 
 - démarrage du contexte Spring et validation des migrations Flyway ;
-- refus des routes protégées sans JWT ou avec un jeton invalide ;
+- refus des routes protégées sans JWT ou avec un jeton invalide, ainsi que du détail et des commentaires d'un article par un utilisateur non abonné ;
 - inscription, connexion par pseudo et e-mail, contraintes de mot de passe ;
 - lecture des thèmes, abonnement et désabonnement ;
 - création et tri ascendant/descendant du fil, rejet d’un tri inconnu ;

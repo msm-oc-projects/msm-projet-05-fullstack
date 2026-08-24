@@ -84,6 +84,24 @@ class MainFeaturesIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
         Long postId = objectMapper.readTree(postJson).get("id").asLong();
 
+        String outsiderUsername = "outsider" + suffix;
+        String outsiderAuthJson = mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"email":"%s@example.com","username":"%s","password":"Valid1!password"}
+                                """.formatted(outsiderUsername, outsiderUsername)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+        String outsiderToken = objectMapper.readTree(outsiderAuthJson).get("token").asText();
+
+        mockMvc.perform(get("/api/articles/{id}", postId).header("Authorization", bearer(outsiderToken)))
+                .andExpect(status().isForbidden());
+        mockMvc.perform(post("/api/articles/{id}/comments", postId)
+                        .header("Authorization", bearer(outsiderToken))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"content\":\"Commentaire interdit\"}"))
+                .andExpect(status().isForbidden());
+
         mockMvc.perform(post("/api/articles")
                         .header("Authorization", bearer(token))
                         .contentType(MediaType.APPLICATION_JSON)

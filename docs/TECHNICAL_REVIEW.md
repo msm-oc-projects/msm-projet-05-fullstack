@@ -25,6 +25,7 @@ Le MVP est cohérent, exécutable et présentable : architecture client–serveu
 | Moyenne | Une valeur de tri inconnue était interprétée silencieusement comme descendante | Corrigé : réponse `400 Tri invalide` et test associé |
 | Moyenne | La version Flyway gérée signalait PostgreSQL 18 comme non supporté | Corrigé : Flyway 11.19.0, validation et migrations réussies sur PostgreSQL 18.4 |
 | Moyenne | Certains chargements front n’exposaient pas leur erreur | Corrigé sur le fil et la création d’article ; messages accessibles conservés |
+| Haute | Un utilisateur authentifié pouvait lire un article hors de ses abonnements en connaissant son identifiant | Corrigé : contrôle d'abonnement dans le service avant le détail et le commentaire, avec réponse `403` et test d'intégration |
 | Faible | `ITopicService` n’avait qu’une implémentation et n’apportait pas de frontière utile | Corrigé : injection directe du service, abstraction supprimée |
 | Moyenne | Le JWT est stocké dans le stockage local du navigateur | Accepté pour le MVP interne ; migrer vers cookie `HttpOnly`, `Secure`, `SameSite` avant ouverture publique |
 | Moyenne | Pas de pagination du fil ni des commentaires | À ajouter seulement lorsque le volume le justifiera |

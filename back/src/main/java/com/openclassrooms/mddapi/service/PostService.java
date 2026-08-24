@@ -76,8 +76,9 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostDetail detail(Long postId) {
+    public PostDetail detail(Long userId, Long postId) {
         var post = find(postId);
+        requireSubscription(userId, post);
         var comments = commentRepository.findByPostIdOrderByCreatedAtAsc(postId).stream()
                 .map(this::comment)
                 .toList();
@@ -88,6 +89,7 @@ public class PostService {
     @Transactional
     public CommentResponse comment(Long userId, Long postId, CreateCommentRequest request) {
         var post = find(postId);
+        requireSubscription(userId, post);
         var author = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
         var comment = new Comment();
@@ -100,6 +102,12 @@ public class PostService {
     private Post find(Long postId) {
         return postRepository.findWithTopicAndAuthorById(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article introuvable"));
+    }
+
+    private void requireSubscription(Long userId, Post post) {
+        if (!subscriptionRepository.existsByUserIdAndTopicId(userId, post.getTopic().getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Accès à cet article non autorisé");
+        }
     }
 
     private PostSummary summary(Post post) {

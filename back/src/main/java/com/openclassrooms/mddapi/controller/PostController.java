@@ -48,8 +48,8 @@ public class PostController {
 
     @GetMapping("/{id}")
     /** Returns an article and its comments. */
-    public PostDetail detail(@PathVariable Long id) {
-        return postService.detail(id);
+    public PostDetail detail(@PathVariable Long id, Authentication authentication) {
+        return postService.detail(CurrentUser.id(authentication), id);
     }
 
     @PostMapping("/{id}/comments")
