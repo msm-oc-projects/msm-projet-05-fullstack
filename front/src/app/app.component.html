@@ -8,7 +8,9 @@
     <nav id="main-navigation" aria-label="Navigation principale" [class.open]="menuOpen()">
       <a routerLink="/articles" routerLinkActive="active" (click)="closeMenu()">Articles</a>
       <a routerLink="/topics" routerLinkActive="active" (click)="closeMenu()">Thèmes</a>
-      <a routerLink="/profile" routerLinkActive="active" (click)="closeMenu()" aria-label="Profil utilisateur">◯</a>
+      <a routerLink="/profile" routerLinkActive="active" class="profile-link" (click)="closeMenu()" aria-label="Profil utilisateur" title="Profil">
+        <span class="profile-icon" aria-hidden="true"></span>
+      </a>
       <button type="button" class="logout" (click)="logout()">Se déconnecter</button>
     </nav>
   </header>

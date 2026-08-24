@@ -15,48 +15,52 @@ import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.SubscriptionId;
 
 @Service
+/** Provides topic discovery and idempotent subscription operations. */
 public class TopicService {
 
-	private final TopicRepository topicRepository;
-	private final SubscriptionRepository subscriptionRepository;
-	private final UserRepository userRepository;
-	
-	public TopicService(TopicRepository topicRepository, SubscriptionRepository subscriptionRepository,
-			UserRepository userRepository) {
-		this.topicRepository = topicRepository;
-		this.subscriptionRepository = subscriptionRepository;
-		this.userRepository = userRepository;
-	}
+    private final TopicRepository topicRepository;
+    private final SubscriptionRepository subscriptionRepository;
+    private final UserRepository userRepository;
 
-	@Transactional(readOnly = true)
-	public List<TopicResponse> getTopics(Long userId) {
-		var subscribedIds = subscriptionRepository.findByUserIdOrderByTopicNameAsc(userId).stream()
-				.map(subscription -> subscription.getTopic().getId())
-				.collect(java.util.stream.Collectors.toSet());
-		return topicRepository.findAllByOrderByNameAsc().stream()
-				.map(topic -> TopicResponse.from(topic, subscribedIds.contains(topic.getId())))
-				.toList();
-	}
+    public TopicService(TopicRepository topicRepository, SubscriptionRepository subscriptionRepository,
+            UserRepository userRepository) {
+        this.topicRepository = topicRepository;
+        this.subscriptionRepository = subscriptionRepository;
+        this.userRepository = userRepository;
+    }
 
-	@Transactional
-	public void subscribe(Long userId, Long topicId) {
-		if (subscriptionRepository.existsByUserIdAndTopicId(userId, topicId)) {
-			return;
-		}
-		var user = userRepository.findById(userId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
-		var topic = topicRepository.findById(topicId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Thème introuvable"));
-		var subscription = new Subscription();
-		subscription.setId(new SubscriptionId(userId, topicId));
-		subscription.setUser(user);
-		subscription.setTopic(topic);
-		subscriptionRepository.save(subscription);
-	}
+    @Transactional(readOnly = true)
+    /** Lists topics and marks those followed by the current user. */
+    public List<TopicResponse> getTopics(Long userId) {
+        var subscribedIds = subscriptionRepository.findByUserIdOrderByTopicNameAsc(userId).stream()
+                .map(subscription -> subscription.getTopic().getId())
+                .collect(java.util.stream.Collectors.toSet());
+        return topicRepository.findAllByOrderByNameAsc().stream()
+                .map(topic -> TopicResponse.from(topic, subscribedIds.contains(topic.getId())))
+                .toList();
+    }
 
-	@Transactional
-	public void unsubscribe(Long userId, Long topicId) {
-		subscriptionRepository.deleteById(new SubscriptionId(userId, topicId));
-	}
-	
+    @Transactional
+    /** Creates a subscription when it does not already exist. */
+    public void subscribe(Long userId, Long topicId) {
+        if (subscriptionRepository.existsByUserIdAndTopicId(userId, topicId)) {
+            return;
+        }
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
+        var topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Thème introuvable"));
+        var subscription = new Subscription();
+        subscription.setId(new SubscriptionId(userId, topicId));
+        subscription.setUser(user);
+        subscription.setTopic(topic);
+        subscriptionRepository.save(subscription);
+    }
+
+    @Transactional
+    /** Removes a subscription for the current user. */
+    public void unsubscribe(Long userId, Long topicId) {
+        subscriptionRepository.deleteById(new SubscriptionId(userId, topicId));
+    }
+
 }

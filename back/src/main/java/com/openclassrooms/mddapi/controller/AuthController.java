@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+/** Exposes the public registration and authentication endpoints. */
 public class AuthController {
     private final AuthService authService;
 
@@ -25,11 +26,13 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
+    /** Registers a user and returns the initial access token. */
     public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 
     @PostMapping("/login")
+    /** Authenticates by e-mail or username. */
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
     }

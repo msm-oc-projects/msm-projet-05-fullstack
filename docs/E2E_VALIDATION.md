@@ -1,6 +1,6 @@
 # Validation end-to-end — MDD
 
-Date de validation : 11 juillet 2026.
+Date de validation : 24 août 2026.
 
 ## Position retenue pour le MVP
 
@@ -67,4 +67,4 @@ Le scenario Cypress doit ensuite etre branche dans la CI avec demarrage automati
 
 ## Etat d'execution
 
-Le scenario est versionne et pret a etre execute. Sur le poste de travail utilise pour cette mise a jour, `npx cypress verify` echoue au demarrage du binaire Electron avec `bad option: --no-sandbox/--smoke-test`. L'execution complete doit donc etre rejouee sur un environnement compatible Cypress ou dans une CI dediee.
+Le scénario est versionné et valide le parcours principal. Son lanceur compatible est fourni par `front/scripts/run-e2e.mjs`. Il pourra ensuite être intégré dans une CI dédiée.

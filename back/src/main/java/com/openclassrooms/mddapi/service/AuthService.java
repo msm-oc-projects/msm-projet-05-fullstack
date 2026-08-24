@@ -22,6 +22,7 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
+/** Applies registration and authentication rules before issuing JWTs. */
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -37,6 +38,7 @@ public class AuthService {
     }
 
     @Transactional
+    /** Creates a user after checking uniqueness and password policy validation. */
     public AuthResponse register(RegisterRequest request) {
         String email = request.email().trim().toLowerCase();
         String username = request.username().trim();
@@ -50,6 +52,7 @@ public class AuthService {
         return response(userRepository.save(user));
     }
 
+    /** Verifies credentials and creates a short-lived signed access token. */
     public AuthResponse login(LoginRequest request) {
         var user = userRepository.findByEmailIgnoreCase(request.identifier().trim())
                 .or(() -> userRepository.findByUsernameIgnoreCase(request.identifier().trim()))

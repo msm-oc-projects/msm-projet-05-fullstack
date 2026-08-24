@@ -13,10 +13,10 @@ import com.openclassrooms.mddapi.model.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-	@EntityGraph(attributePaths = {"topic", "author"})
-	List<Post> findByTopicIdIn(List<Long> topicIds, Sort sort);
+    @EntityGraph(attributePaths = {"topic", "author"})
+    List<Post> findByTopicIdIn(List<Long> topicIds, Sort sort);
 
-	@EntityGraph(attributePaths = {"topic", "author"})
-	Optional<Post> findWithTopicAndAuthorById(Long id);
+    @EntityGraph(attributePaths = {"topic", "author"})
+    Optional<Post> findWithTopicAndAuthorById(Long id);
 
 }

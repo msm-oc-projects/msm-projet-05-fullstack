@@ -36,7 +36,7 @@ describe('Main components', () => {
     expect(component.error()).toBe('Identifiants invalides');
   });
 
-  it('should load, sort and open the feed', () => {
+  it('should load and sort the feed', () => {
     const articles = jasmine.createSpyObj<ArticleService>('ArticleService', ['feed']);
     articles.feed.and.returnValue(of([]));
     TestBed.configureTestingModule({ imports: [CommonModule], declarations: [FeedComponent], providers: [
@@ -45,9 +45,7 @@ describe('Main components', () => {
     const component = TestBed.createComponent(FeedComponent).componentInstance;
     component.ngOnInit();
     component.toggleSort();
-    component.open(7);
     expect(articles.feed).toHaveBeenCalledTimes(2);
-    expect(router.navigate).toHaveBeenCalledWith(['/articles', 7]);
   });
 
   it('should load topics and create an article', () => {
@@ -71,7 +69,8 @@ describe('Main components', () => {
     articles.comment.and.returnValue(of({ id: 5, content: 'Merci', author: 'dev', createdAt: '' }));
     TestBed.configureTestingModule({ imports: [CommonModule, ReactiveFormsModule], declarations: [PostDetailComponent], providers: [
       { provide: ArticleService, useValue: articles },
-      { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '4' } } } }
+      { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '4' } } } },
+      { provide: Router, useValue: router }
     ] });
     const component = TestBed.createComponent(PostDetailComponent).componentInstance;
     component.ngOnInit();

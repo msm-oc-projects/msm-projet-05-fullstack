@@ -13,6 +13,7 @@ import com.openclassrooms.mddapi.repository.SubscriptionRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
+/** Manages profile data while keeping password hashing server-side. */
 public class ProfileService {
     private final UserRepository userRepository;
     private final SubscriptionRepository subscriptionRepository;
@@ -26,6 +27,7 @@ public class ProfileService {
     }
 
     @Transactional(readOnly = true)
+    /** Loads the profile and its ordered subscriptions. */
     public ProfileResponse get(Long userId) {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));
@@ -36,6 +38,7 @@ public class ProfileService {
     }
 
     @Transactional
+    /** Updates profile fields and hashes a new password when supplied. */
     public ProfileResponse update(Long userId, UpdateProfileRequest request) {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvable"));

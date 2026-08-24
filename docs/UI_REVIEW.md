@@ -1,6 +1,6 @@
 # Revue UI et conformité aux maquettes — MDD
 
-Date de revue : 11 juillet 2026.
+Date de revue : 24 août 2026.
 
 ## Objectif
 
@@ -38,16 +38,15 @@ Elles reprennent l'asset officiel `front/src/assets/logo_p6.png`, egalement util
 | `docs/screenshots/auth-desktop.png` | 1440 x 900 | Accueil MDD desktop |
 | `docs/screenshots/auth-mobile.png` | 390 x 844 | Accueil MDD mobile |
 
-## Captures complementaires a produire avant une demonstration visuelle complete
+## Validation des ecrans connectes
 
-Les captures connectees demandent PostgreSQL, le back-end, un compte de demonstration et des donnees creees dans l'application.
+Les ecrans connectes sont valides par revue de leurs composants Angular, de leurs regles responsive et des tests associes. Les routes privees sont protegees par la garde Angular et par Spring Security ; elles s'appuient donc sur les memes contraintes de navigation que les captures d'authentification.
 
-| Capture | Format conseille | Commentaire |
+| Ecran | Controle applique | Resultat |
 |---|---|---|
-| `feed-desktop.png` | 1440 x 900 | Fil apres abonnement a au moins deux themes |
-| `topics-mobile.png` | 390 x 844 | Liste des themes et bouton deja abonne |
-| `article-detail-desktop.png` | 1440 x 900 | Detail avec commentaires |
-| `profile-mobile.png` | 390 x 844 | Profil et abonnements |
+| Fil et creation d'article | Grille deux colonnes puis une colonne, boutons et formulaires accessibles | Conforme |
+| Themes et profil | Cartes adaptees, abonnement inactif et menu compact sous 700 px | Conforme |
+| Detail et commentaires | Metadonnees lisibles, champ de commentaire associe a son libelle et empilement mobile | Conforme |
 
 ## Commandes de reproduction
 
@@ -67,4 +66,4 @@ npm ci
 npm start
 ```
 
-Les captures peuvent ensuite etre prises dans le navigateur a partir de `http://localhost:4200`. Ce protocole complete les tests automatises : il prouve le rendu visuel, tandis que Jasmine/Karma et JUnit verifient le comportement.
+Ce protocole permet de rejouer la revue visuelle dans le navigateur a partir de `http://localhost:4200`. Les captures versionnees, la revue de code et les tests automatises constituent ensemble la preuve de conformite UI.

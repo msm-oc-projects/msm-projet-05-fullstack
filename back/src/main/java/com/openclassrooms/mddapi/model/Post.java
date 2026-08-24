@@ -17,80 +17,80 @@ import jakarta.persistence.Table;
 @Table(name = "posts")
 public class Post {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="post_id")
-	private Long id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "topic_id", nullable = false)
-	private Topic topic;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="post_id")
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "author_id", nullable = false)
-	private User author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id", nullable = false)
+    private Topic topic;
 
-	@Column(nullable = false)
-	private String title;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
-	@Column(nullable = false, columnDefinition = "text")
-	private String content;
+    @Column(nullable = false)
+    private String title;
 
-	@Column(name = "created_at", nullable = false, updatable = false)
-	private Instant createdAt;
+    @Column(nullable = false, columnDefinition = "text")
+    private String content;
 
-	@PrePersist
-	void initializeCreatedAt() {
-		if (createdAt == null) {
-			createdAt = Instant.now();
-		}
-	}
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
 
-	public Long getId() {
-		return id;
-	}
+    @PrePersist
+    void initializeCreatedAt() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Topic getTopic() {
-		return topic;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
+    public Topic getTopic() {
+        return topic;
+    }
 
-	public User getAuthor() {
-		return author;
-	}
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
+    public User getAuthor() {
+        return author;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

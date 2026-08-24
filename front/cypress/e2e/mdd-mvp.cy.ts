@@ -46,8 +46,8 @@ describe('MDD MVP journey', () => {
     cy.wait('@createArticle').its('response.statusCode').should('eq', 201);
 
     cy.contains(title).should('be.visible');
-    cy.get('textarea').type(comment);
-    cy.contains('Envoyer').click();
+    cy.get('textarea').should('be.visible').type(comment).should('have.value', comment);
+    cy.get('form').contains('Envoyer').should('not.be.disabled').click();
     cy.wait('@createComment').its('response.statusCode').should('eq', 201);
     cy.contains(comment).should('be.visible');
 

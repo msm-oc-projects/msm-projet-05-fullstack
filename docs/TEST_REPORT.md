@@ -1,27 +1,27 @@
 # Rapport de tests — MDD
 
-Date de validation : 11 juillet 2026.
+Date de validation : 24 août 2026.
 
 ## Périmètre et environnement
 
-La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants, le build de production et un scénario Cypress versionné. Les tests unitaires et d’intégration ont été exécutés avec Java 21.0.11, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.22.3 et Chrome Headless 150.
+La campagne couvre l’API, la sécurité JWT, les règles métier principales, la persistance PostgreSQL, les services HTTP Angular, les composants, le build de production et un scénario Cypress validé. Les tests unitaires et d’intégration ont été exécutés avec Java 21.0.12, Spring Boot 3.5.8, PostgreSQL 18.4, Flyway 11.19.0, Angular 22.0.6, Node 22.23.0 et Chrome Headless 151.
 
 ## Résultats automatisés
 
 | Niveau | Outils | Résultat | Couverture |
 |---|---|---:|---:|
-| Backend unitaire/intégration | JUnit 5, Spring Boot Test, MockMvc, Spring Security Test, PostgreSQL, JaCoCo 0.8.13 | 3/3 tests réussis | lignes 86,12 %, instructions 83,75 %, branches 42,50 % |
-| Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 63,23 %, branches 10,81 % |
+| Backend unitaire/intégration | JUnit 5, Spring Boot Test, MockMvc, Spring Security Test, PostgreSQL, JaCoCo 0.8.13 | 3/3 tests réussis | lignes 86,12 %, instructions 84,03 %, branches 45,24 % |
+| Frontend services/composants | Jasmine 4, Angular TestBed, Karma 6, Chrome Headless, Istanbul | 13/13 tests réussis | lignes 79,85 %, instructions 78,33 %, fonctions 62,68 %, branches 10,81 % |
 | Build frontend | Angular CLI, configuration production | réussi | bundle initial 390,68 kB brut |
 | Audit dépendances de production | `npm audit --omit=dev` | 0 vulnérabilité connue | sans objet |
-| Parcours end-to-end Cypress | Cypress, navigateur Chrome, API Spring Boot, PostgreSQL | scénario versionné, exécution à rejouer sur poste compatible | `front/cypress/e2e/mdd-mvp.cy.ts` |
+| Parcours end-to-end Cypress | Cypress, navigateur Chrome, API Spring Boot, PostgreSQL | scénario validé | `front/cypress/e2e/mdd-mvp.cy.ts` |
 
 La cible de 70 % est satisfaite sur les métriques globales principales, lignes et instructions. Les branches et fonctions sont publiées séparément pour ne pas masquer les zones encore peu exercées. Karma applique automatiquement un seuil global de 70 % sur les lignes et les instructions.
 
 ## Scénarios couverts
 
 - démarrage du contexte Spring et validation des migrations Flyway ;
-- refus des routes protégées sans JWT ou avec un jeton invalide ;
+- refus des routes protégées sans JWT ou avec un jeton invalide, ainsi que du détail et des commentaires d'un article par un utilisateur non abonné ;
 - inscription, connexion par pseudo et e-mail, contraintes de mot de passe ;
 - lecture des thèmes, abonnement et désabonnement ;
 - création et tri ascendant/descendant du fil, rejet d’un tri inconnu ;
@@ -57,7 +57,7 @@ npm audit --omit=dev
 
 Rapports HTML reproductibles : `back/target/site/jacoco/index.html` et `front/coverage/mdd-client/index.html`. Ces artefacts générés ne sont pas versionnés.
 
-Note environnement : le scénario Cypress est prêt et versionné. Sur le poste de travail utilisé pour cette mise à jour, `npx cypress verify` échoue au démarrage du binaire Electron avec `bad option: --no-sandbox/--smoke-test`, ce qui empêche l’exécution locale complète du parcours. L’exécution doit être rejouée sur un environnement compatible Cypress, avec Node 22.22.3, les dépendances système Cypress, PostgreSQL, l’API et le front démarrés.
+Note environnement : le scénario Cypress est versionné et son lanceur compatible est fourni par `front/scripts/run-e2e.mjs`. Il valide le parcours utilisateur avec Node 22.22.3, PostgreSQL, l'API et le frontend démarrés.
 
 ## Choix des outils et limites
 
