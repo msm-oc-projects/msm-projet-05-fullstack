@@ -15,6 +15,7 @@ import com.openclassrooms.mddapi.model.Subscription;
 import com.openclassrooms.mddapi.model.SubscriptionId;
 
 @Service
+/** Provides topic discovery and idempotent subscription operations. */
 public class TopicService {
 
 	private final TopicRepository topicRepository;
@@ -29,6 +30,7 @@ public class TopicService {
 	}
 
 	@Transactional(readOnly = true)
+	/** Lists topics and marks those followed by the current user. */
 	public List<TopicResponse> getTopics(Long userId) {
 		var subscribedIds = subscriptionRepository.findByUserIdOrderByTopicNameAsc(userId).stream()
 				.map(subscription -> subscription.getTopic().getId())
@@ -39,6 +41,7 @@ public class TopicService {
 	}
 
 	@Transactional
+	/** Creates a subscription when it does not already exist. */
 	public void subscribe(Long userId, Long topicId) {
 		if (subscriptionRepository.existsByUserIdAndTopicId(userId, topicId)) {
 			return;
@@ -55,6 +58,7 @@ public class TopicService {
 	}
 
 	@Transactional
+	/** Removes a subscription for the current user. */
 	public void unsubscribe(Long userId, Long topicId) {
 		subscriptionRepository.deleteById(new SubscriptionId(userId, topicId));
 	}

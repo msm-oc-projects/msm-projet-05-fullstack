@@ -18,6 +18,7 @@ import com.openclassrooms.mddapi.service.TopicService;
 
 @RestController
 @RequestMapping("/api/topics")
+/** Exposes topic discovery and subscription operations. */
 public class TopicController {
 	
 	private final TopicService topicService;
@@ -27,18 +28,21 @@ public class TopicController {
 	}
 
 	@GetMapping
+	/** Returns all topics and the authenticated user's subscription state. */
 	public List<TopicResponse> getTopics(Authentication authentication) {
 		return topicService.getTopics(CurrentUser.id(authentication));
 	}
 
 	@PostMapping("/{id}/subscription")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	/** Subscribes the authenticated user to a topic. */
 	public void subscribe(@PathVariable Long id, Authentication authentication) {
 		topicService.subscribe(CurrentUser.id(authentication), id);
 	}
 
 	@DeleteMapping("/{id}/subscription")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	/** Removes a topic subscription for the authenticated user. */
 	public void unsubscribe(@PathVariable Long id, Authentication authentication) {
 		topicService.unsubscribe(CurrentUser.id(authentication), id);
 	}
