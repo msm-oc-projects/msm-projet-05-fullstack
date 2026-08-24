@@ -17,17 +17,31 @@
       "problemMatcher": []
     },
     {
-      "label": "back: start",
+      "label": "back: start (Linux/macOS)",
       "type": "shell",
-      "command": "./mvnw spring-boot:run",
+      "command": "set -a && . ../.env && set +a && ./mvnw spring-boot:run",
       "options": { "cwd": "${workspaceFolder}/back" },
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "back: test",
+      "label": "back: test (Linux/macOS)",
       "type": "shell",
-      "command": "./mvnw test",
+      "command": "set -a && . ../.env && set +a && ./mvnw test",
       "options": { "cwd": "${workspaceFolder}/back" },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "back: start (Windows)",
+      "type": "shell",
+      "command": "Get-Content ..\\.env | Where-Object { $_ -match '^[^#][^=]*=' } | ForEach-Object { $name, $value = $_ -split '=', 2; Set-Item -Path \"Env:$($name.Trim())\" -Value $value.Trim() }; .\\mvnw.cmd spring-boot:run",
+      "options": { "cwd": "${workspaceFolder}/back", "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "back: test (Windows)",
+      "type": "shell",
+      "command": "Get-Content ..\\.env | Where-Object { $_ -match '^[^#][^=]*=' } | ForEach-Object { $name, $value = $_ -split '=', 2; Set-Item -Path \"Env:$($name.Trim())\" -Value $value.Trim() }; .\\mvnw.cmd test",
+      "options": { "cwd": "${workspaceFolder}/back", "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
       "problemMatcher": "$msCompile"
     },
     {
