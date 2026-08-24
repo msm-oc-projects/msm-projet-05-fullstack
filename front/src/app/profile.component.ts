@@ -5,13 +5,16 @@ import { Profile, ProfileService } from './profile.service';
 import { TopicService } from './topic/topic.service';
 
 @Component({ selector: 'app-profile', standalone: false, changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<main><h1>Profil utilisateur</h1><form [formGroup]="form" (ngSubmit)="save()">
-    <label>Nom d'utilisateur <input formControlName="username"></label><label>E-mail <input type="email" formControlName="email"></label>
-    <label>Nouveau mot de passe <input type="password" formControlName="password"></label><button type="submit" [disabled]="form.invalid">Sauvegarder</button></form>
-    @if (message()) { <p aria-live="polite">{{ message() }}</p> } @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
-    <h2>Abonnements</h2><section class="grid">@for (topic of profile()?.subscriptions ?? []; track topic.id) {
-      <article class="card"><h3>{{ topic.name }}</h3><p>{{ topic.description }}</p><button (click)="unsubscribe(topic.id)">Se désabonner</button></article>
-    } @empty { <p>Aucun abonnement.</p> }</section></main>` })
+  template: `<main class="page profile-page"><section class="profile-panel"><h1>Profil utilisateur</h1><form class="profile-form" [formGroup]="form" (ngSubmit)="save()">
+    <label class="form-field"><span>Nom d'utilisateur</span><input formControlName="username"></label>
+    <label class="form-field"><span>E-mail</span><input type="email" formControlName="email"></label>
+    <label class="form-field"><span>Nouveau mot de passe</span><input type="password" formControlName="password"></label>
+    <button type="submit" class="primary-action profile-submit" [disabled]="form.invalid">Sauvegarder</button></form>
+    @if (message()) { <p aria-live="polite" class="success-message">{{ message() }}</p> } @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
+  </section>
+  <section class="subscriptions-section"><h2>Abonnements</h2><div class="subscription-grid">@for (topic of profile()?.subscriptions ?? []; track topic.id) {
+    <article class="subscription-card"><h3>{{ topic.name }}</h3><p>{{ topic.description }}</p><button type="button" class="button-secondary" (click)="unsubscribe(topic.id)">Se désabonner</button></article>
+  } @empty { <p class="empty-state">Aucun abonnement.</p> }</div></section></main>` })
 export class ProfileComponent implements OnInit {
   private readonly fb = inject(FormBuilder); private readonly service = inject(ProfileService); private readonly topics = inject(TopicService);
   readonly profile = signal<Profile | null>(null); readonly message = signal(''); readonly error = signal('');

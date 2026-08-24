@@ -7,17 +7,19 @@ import { Topic } from './topic/topic.model';
 import { TopicService } from './topic/topic.service';
 
 @Component({ selector: 'app-post-create', standalone: false, changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<main><h1>Créer un article</h1><form [formGroup]="form" (ngSubmit)="submit()">
-    <label>Thème <select formControlName="topicId"><option value="">Sélectionner un thème</option>
-      @for (topic of topics(); track topic.id) { <option [value]="topic.id">{{ topic.name }}</option> }</select></label>
-    <label>Titre <input formControlName="title" maxlength="255"></label>
-    <label>Contenu <textarea formControlName="content" rows="10"></textarea></label>
-    <button type="submit" [disabled]="form.invalid">Créer</button>
-    @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
-  </form></main>` })
+  template: `<main class="page editor-page">
+    <button type="button" class="back-link" (click)="router.navigate(['/articles'])"><span aria-hidden="true">←</span> Retour</button>
+    <section class="editor-panel"><h1>Créer un article</h1><form class="editor-form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="form-field"><span>Thème</span><select formControlName="topicId"><option value="">Sélectionner un thème</option>
+        @for (topic of topics(); track topic.id) { <option [value]="topic.id">{{ topic.name }}</option> }</select></label>
+      <label class="form-field"><span>Titre de l'article</span><input formControlName="title" maxlength="255"></label>
+      <label class="form-field"><span>Contenu de l'article</span><textarea formControlName="content" rows="10"></textarea></label>
+      <button type="submit" class="primary-action editor-submit" [disabled]="form.invalid">Créer</button>
+      @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
+    </form></section></main>` })
 export class PostCreateComponent implements OnInit {
   private readonly fb = inject(FormBuilder); private readonly topicsService = inject(TopicService);
-  private readonly articles = inject(ArticleService); private readonly router = inject(Router);
+  private readonly articles = inject(ArticleService); readonly router = inject(Router);
   readonly topics = signal<Topic[]>([]); readonly error = signal('');
   readonly form = this.fb.group({ topicId: ['', Validators.required], title: ['', Validators.required], content: ['', Validators.required] });
   ngOnInit(): void { this.topicsService.getTopics().subscribe({

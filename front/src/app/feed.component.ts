@@ -6,15 +6,20 @@ import { ArticleService, ArticleSummary } from './article.service';
 @Component({
   selector: 'app-feed', standalone: false, changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <main><header class="actions"><button (click)="router.navigate(['/articles/new'])">Créer un article</button>
-      <button (click)="toggleSort()">Trier : {{ sort() === 'desc' ? 'plus récent' : 'plus ancien' }}</button></header>
+    <main class="page feed-page"><header class="feed-toolbar">
+      <button type="button" class="primary-action" (click)="router.navigate(['/articles/new'])">Créer un article</button>
+      <button type="button" class="sort-control" (click)="toggleSort()" [attr.aria-label]="sort() === 'desc' ? 'Trier du plus ancien au plus récent' : 'Trier du plus récent au plus ancien'">
+        <span>Trier par</span><span class="sort-arrow" [class.sort-arrow--ascending]="sort() === 'asc'" aria-hidden="true"></span>
+      </button>
+    </header>
       @if (error()) { <p role="alert" class="error">{{ error() }}</p> }
-      @if (!loading() && articles().length === 0) { <p>Abonnez-vous à un thème pour alimenter votre fil.</p> }
-      <section class="grid">@for (article of articles(); track article.id) {
-        <article class="card" tabindex="0" (click)="open(article.id)" (keydown.enter)="open(article.id)">
-          <h2>{{ article.title }}</h2><p>{{ article.createdAt | date:'dd/MM/yyyy' }} · {{ article.author }}</p>
-          <p>{{ article.topic }}</p><p>{{ article.content }}</p>
-        </article>
+      @if (!loading() && articles().length === 0) { <p class="empty-state">Abonnez-vous à un thème pour alimenter votre fil.</p> }
+      <section class="article-grid" aria-label="Fil d'actualité">@for (article of articles(); track article.id) {
+        <a class="article-card" [routerLink]="['/articles', article.id]">
+          <h2>{{ article.title }}</h2>
+          <p class="article-meta"><span>{{ article.createdAt | date:'dd/MM/yyyy' }}</span><span>{{ article.author }}</span></p>
+          <p class="article-excerpt">{{ article.content }}</p>
+        </a>
       }</section>
     </main>`
 })
@@ -27,7 +32,6 @@ export class FeedComponent implements OnInit {
   readonly error = signal('');
   ngOnInit(): void { this.load(); }
   toggleSort(): void { this.sort.update(value => value === 'desc' ? 'asc' : 'desc'); this.load(); }
-  open(id: number): void { this.router.navigate(['/articles', id]); }
   private load(): void {
     this.loading.set(true);
     this.error.set('');
