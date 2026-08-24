@@ -11,39 +11,39 @@ import jakarta.persistence.Table;
 @Table(name = "topics")
 public class Topic {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "topic_id")
-	private Long id;
-	
-	@Column(nullable = false)
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "topic_id")
+    private Long id;
 
-	@Column(nullable = false, columnDefinition = "text")
-	private String description;
+    @Column(nullable = false)
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(nullable = false, columnDefinition = "text")
+    private String description;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

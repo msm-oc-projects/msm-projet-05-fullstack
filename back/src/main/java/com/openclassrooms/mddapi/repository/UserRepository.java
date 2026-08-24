@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.openclassrooms.mddapi.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	Optional<User> findByEmailIgnoreCase(String email);
-	Optional<User> findByUsernameIgnoreCase(String username);
-	boolean existsByEmailIgnoreCase(String email);
-	boolean existsByUsernameIgnoreCase(String username);
+    Optional<User> findByEmailIgnoreCase(String email);
+    Optional<User> findByUsernameIgnoreCase(String username);
+    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByUsernameIgnoreCase(String username);
 }

@@ -11,6 +11,6 @@ import com.openclassrooms.mddapi.model.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-	@EntityGraph(attributePaths = "author")
-	List<Comment> findByPostIdOrderByCreatedAtAsc(Long postId);
+    @EntityGraph(attributePaths = "author")
+    List<Comment> findByPostIdOrderByCreatedAtAsc(Long postId);
 }
