@@ -17,7 +17,7 @@ type AuthView = 'home' | 'login' | 'register';
         <h1>Bienvenue sur MDD</h1>
         <p class="auth-intro">Le réseau social des développeurs.</p>
         <div class="auth-actions">
-          <button type="button" (click)="show('register')">S'inscrire</button>
+          <button type="button" class="primary-action" (click)="show('register')">S'inscrire</button>
           <button type="button" class="button-secondary" (click)="show('login')">Se connecter</button>
         </div>
       } @else {
@@ -25,23 +25,28 @@ type AuthView = 'home' | 'login' | 'register';
         <h1>{{ view() === 'register' ? 'Inscription' : 'Connexion' }}</h1>
         @if (view() === 'register') {
           <form [formGroup]="registerForm" (ngSubmit)="register()">
-            <label for="register-email">E-mail</label>
+            <label class="form-field" for="register-email"><span>E-mail</span>
             <input id="register-email" type="email" autocomplete="email" formControlName="email">
-            <label for="register-username">Nom d'utilisateur</label>
+            </label>
+            <label class="form-field" for="register-username"><span>Nom d'utilisateur</span>
             <input id="register-username" autocomplete="username" formControlName="username">
-            <label for="register-password">Mot de passe</label>
+            </label>
+            <label class="form-field" for="register-password"><span>Mot de passe</span>
             <input id="register-password" type="password" autocomplete="new-password" formControlName="password"
               aria-describedby="password-help">
+            </label>
             <small id="password-help">8 caractères minimum avec majuscule, minuscule, chiffre et caractère spécial.</small>
-            <button type="submit" [disabled]="registerForm.invalid || submitting()">S'inscrire</button>
+            <button type="submit" class="primary-action" [disabled]="registerForm.invalid || submitting()">S'inscrire</button>
           </form>
         } @else {
           <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <label for="login-identifier">E-mail ou nom d'utilisateur</label>
+            <label class="form-field" for="login-identifier"><span>E-mail ou nom d'utilisateur</span>
             <input id="login-identifier" autocomplete="username" formControlName="identifier">
-            <label for="login-password">Mot de passe</label>
+            </label>
+            <label class="form-field" for="login-password"><span>Mot de passe</span>
             <input id="login-password" type="password" autocomplete="current-password" formControlName="password">
-            <button type="submit" [disabled]="loginForm.invalid || submitting()">Se connecter</button>
+            </label>
+            <button type="submit" class="primary-action" [disabled]="loginForm.invalid || submitting()">Se connecter</button>
           </form>
         }
         @if (error()) { <p role="alert" class="error-message">{{ error() }}</p> }
