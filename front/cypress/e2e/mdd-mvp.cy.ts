@@ -1,12 +1,12 @@
 describe('MDD MVP journey', () => {
   it('registers, subscribes, publishes, comments and logs out', () => {
     const suffix = Date.now();
-    const username = `e2e${suffix}`;
+    const username = `claire.dev${suffix}`;
     const email = `${username}@example.com`;
     const password = 'Valid1!password';
-    const title = `Article E2E ${suffix}`;
-    const content = 'Contenu cree par le scenario Cypress.';
-    const comment = 'Commentaire cree par le scenario Cypress.';
+    const title = 'Bien débuter avec les tests d’API';
+    const content = 'Quelques repères simples pour écrire des tests d’API fiables et faciles à maintenir.';
+    const comment = 'Merci pour ces conseils, la partie sur les cas limites est particulièrement utile.';
 
     cy.intercept('POST', '**/api/auth/register').as('register');
     cy.intercept('GET', '**/api/topics').as('topics');
@@ -15,6 +15,10 @@ describe('MDD MVP journey', () => {
     cy.intercept('POST', '**/api/articles/*/comments').as('createComment');
 
     cy.visit('/auth');
+    cy.viewport(1440, 900);
+    cy.screenshot('auth-desktop');
+    cy.viewport(390, 844);
+    cy.screenshot('auth-mobile');
     cy.contains("S'inscrire").click();
     cy.get('#register-email').type(email);
     cy.get('#register-username').type(username);
@@ -33,6 +37,14 @@ describe('MDD MVP journey', () => {
     cy.get('.topic-card').first().should('contain.text', 'Déjà abonné');
 
     cy.contains('Articles').click();
+    cy.viewport(1280, 720);
+    cy.screenshot('feed-desktop');
+    cy.viewport(390, 1249);
+    cy.contains('Thèmes').click();
+    cy.wait('@topics').its('response.statusCode').should('eq', 200);
+    cy.get('.topic-card').first().should('contain.text', 'Déjà abonné');
+    cy.screenshot('topics-mobile');
+    cy.contains('Articles').click();
     cy.contains('Créer un article').click();
     cy.get('select[formControlName="topicId"] option')
       .eq(1)
@@ -50,8 +62,12 @@ describe('MDD MVP journey', () => {
     cy.get('form').contains('Envoyer').should('not.be.disabled').click();
     cy.wait('@createComment').its('response.statusCode').should('eq', 201);
     cy.contains(comment).should('be.visible');
+    cy.viewport(1280, 725);
+    cy.screenshot('article-detail-desktop');
 
     cy.get('a[aria-label="Profil utilisateur"]').click();
+    cy.viewport(390, 795);
+    cy.screenshot('profile-mobile');
     cy.get('input[formControlName="username"]').clear().type(`${username}updated`);
     cy.contains('Sauvegarder').click();
     cy.contains('Profil mis à jour.').should('be.visible');
